@@ -1,12 +1,34 @@
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import ReactLoading from "react-loading";
 import { FilterModal, JobContainer } from "components";
 import useSWR from "swr";
 import { ResponseData } from "types";
+import { RootState } from "features";
+import { useSelector } from "react-redux";
 
 const Home: NextPage = () => {
   const { data, isValidating } = useSWR("/api/job");
+  const filterType = useSelector((state: RootState) => state.filter);
+  const [filteredResponseData, setFilteredResponseData] = useState<
+    ResponseData[]
+  >([]);
+
+  useEffect(() => {
+    if (data) {
+      if (filterType.length > 0) {
+        setFilteredResponseData(
+          (data.data as ResponseData[]).filter(
+            (item) =>
+              filterType.every((type) => item.tags.includes(type)) === true
+          )
+        );
+      } else {
+        setFilteredResponseData([]);
+      }
+    }
+  }, [data, filterType]);
 
   return (
     <>
@@ -26,7 +48,10 @@ const Home: NextPage = () => {
           }`}
         >
           {!isValidating ? (
-            (data.data as ResponseData[]).map((item, index) => {
+            (filterType.length > 0
+              ? filteredResponseData
+              : (data.data as ResponseData[])
+            ).map((item, index) => {
               return <JobContainer key={index} {...item} />;
             })
           ) : (

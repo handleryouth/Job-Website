@@ -48,10 +48,10 @@ const JobContainer = ({
           <h3 className="mb-1 capitalize">{job}</h3>
           <div className="flex flex-col sm:flex-row mb-1 border-l-4 border-l-darkGrayishCyan sm:border-l-0 pl-2 sm:pl-0">
             <p>{formatDistanceToNow(new Date(timePosted))}</p>
-            <p className="sm:ml-1 md:ml-2 border-dotted capitalize sm:border-l-8 sm:pl-2">
+            <p className="sm:ml-1 md:ml-2 border-solid capitalize border-l-4  sm:pl-2">
               {contract}
             </p>
-            <p className="sm:ml-1 md:ml-2 border-dotted capitalize sm:border-l-8 sm:pl-2">
+            <p className="sm:ml-1 md:ml-2 border-solid capitalize border-l-4 sm:pl-2">
               {location}
             </p>
           </div>

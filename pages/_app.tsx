@@ -11,7 +11,11 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <SWRConfig value={{ fetcher }}>
+      <SWRConfig
+        value={{
+          fetcher,
+        }}
+      >
         <Component {...pageProps} />
       </SWRConfig>
     </Provider>
